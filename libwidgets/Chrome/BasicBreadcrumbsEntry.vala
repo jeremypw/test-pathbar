@@ -21,7 +21,7 @@
 namespace Marlin.View.Chrome {
     public class BasicBreadcrumbsEntry : Gtk.Stack, Navigatable  {
         private Breadcrumbs breadcrumbs;
-        private PathEntry pathentry;
+        private PathEntry path_entry;
 
         /* Deprecated */
         public string? action_icon_name {get; set;}
@@ -29,18 +29,18 @@ namespace Marlin.View.Chrome {
         construct {
 
             breadcrumbs = new Breadcrumbs ();
-            pathentry = new PathEntry ();
+            path_entry = new PathEntry ();
 
             add (breadcrumbs);
-            add (pathentry);
+            add (path_entry);
             set_visible_child (breadcrumbs);
 
             breadcrumbs.edit_request.connect (() => {
-                set_visible_child (pathentry);
+                set_visible_child (path_entry);
             });
 
-            notify["action-icon-name"].connect (() => {
-                warning ("action icon now %s", action_icon_name);
+            path_entry.activate.connect (() => {
+                set_visible_child (breadcrumbs);
             });
         }
 
@@ -67,16 +67,16 @@ namespace Marlin.View.Chrome {
         }
 
         public void set_entry_text (string? txt) {
-            pathentry.set_text (txt);
-            set_visible_child (pathentry);
+            path_entry.set_text (txt);
+            set_visible_child (path_entry);
         }
 
         public string get_entry_text () {
-            return pathentry.text;
+            return path_entry.text;
         }
 
         public virtual void reset () {
-            pathentry.reset ();
+            path_entry.reset ();
             set_visible_child (breadcrumbs);
         }
 
@@ -85,7 +85,7 @@ namespace Marlin.View.Chrome {
         }
 
         public void set_placeholder (string txt) {
-            pathentry.set_placeholder_text (txt);
+            path_entry.set_placeholder_text (txt);
         }
 
         /* Deprecated */
@@ -178,13 +178,9 @@ namespace Marlin.View.Chrome {
                 var est = new Gtk.Label ("est");
                 ele3.add (est);
 
-                var ele4 = new BreadcrumbElement ();
-                ele4.hexpand = true;
-                orientation = Gtk.Orientation.HORIZONTAL;
                 add (ele1);
                 add (ele2);
                 add (ele3);
-                add (ele4);
 
                 var edit_click_area = new Gtk.Button ();
                 edit_click_area.set_size_request (50, -1);
