@@ -22,7 +22,7 @@
 namespace Marlin.View.Chrome
 {
     public class LocationBar : BasicLocationBar {
-        private BreadcrumbsEntry bread;
+        private BasicBreadcrumbsEntry bread;
         private SearchResults search_results;
         private GLib.File? search_location = null;
 

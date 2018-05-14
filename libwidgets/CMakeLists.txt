@@ -33,8 +33,8 @@ vala_precompile(VALA_C ${PKGNAME}
     Interfaces/NavigatableInterface.vala
     Chrome/BasicLocationBar.vala
     Chrome/BasicBreadcrumbsEntry.vala
-    Chrome/BreadcrumbElement.vala
-    Chrome/BreadcrumbIconList.vala
+    #Chrome/BreadcrumbElement.vala
+    #Chrome/BreadcrumbIconList.vala
     Chrome/ButtonWithMenu.vala
     Chrome/ImgEventBox.vala
     View/SearchResults.vala
