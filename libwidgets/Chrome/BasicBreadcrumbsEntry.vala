@@ -40,7 +40,16 @@ namespace Marlin.View.Chrome {
             });
 
             path_entry.activate.connect (() => {
+                activate_path (Environment.get_home_dir ());
                 set_visible_child (breadcrumbs);
+            });
+
+            path_entry.cancel.connect (() => {
+                set_visible_child (breadcrumbs);
+            });
+
+            path_entry.changed.connect (() => {
+                entry_text_changed (path_entry.text);
             });
         }
 
@@ -183,6 +192,7 @@ namespace Marlin.View.Chrome {
                 add (ele3);
 
                 var edit_click_area = new Gtk.Button ();
+                edit_click_area.get_style_context ().add_class ("flat");
                 edit_click_area.set_size_request (50, -1);
                 edit_click_area.hexpand = true;
                 edit_click_area.clicked.connect (() => {
@@ -367,12 +377,27 @@ namespace Marlin.View.Chrome {
         }
 
         private class PathEntry : Gtk.Entry {
+            public signal void cancel ();
+
+            construct {
+                key_press_event.connect (on_key_press_event);
+            }
+
+            private bool on_key_press_event (Gdk.EventKey event) {
+                switch (event.keyval) {
+                    case Gdk.Key.Escape:
+                        cancel ();
+                        return true;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+
             public void reset () {
 
             }
-
-
-
         }
     }
 }
