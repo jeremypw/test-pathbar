@@ -35,6 +35,10 @@ namespace Marlin.View.Chrome {
             add (pathentry);
             set_visible_child (breadcrumbs);
 
+            breadcrumbs.edit_request.connect (() => {
+                set_visible_child (pathentry);
+            });
+
             notify["action-icon-name"].connect (() => {
                 warning ("action icon now %s", action_icon_name);
             });
@@ -64,6 +68,7 @@ namespace Marlin.View.Chrome {
 
         public void set_entry_text (string? txt) {
             pathentry.set_text (txt);
+            set_visible_child (pathentry);
         }
 
         public string get_entry_text () {
@@ -72,6 +77,7 @@ namespace Marlin.View.Chrome {
 
         public virtual void reset () {
             pathentry.reset ();
+            set_visible_child (breadcrumbs);
         }
 
         public void set_animation_visible (bool visible) {
@@ -104,6 +110,9 @@ namespace Marlin.View.Chrome {
             public bool animation_visible {get; set; default = true;}
             public string path {get; set; default = "";}
             public int minimum_width {get; private set; default = 300;}
+
+            public signal void edit_request ();
+            public signal void refresh_request ();
 
             private const string BREADCRUMB = """
                 breadcrumb {
@@ -176,6 +185,22 @@ namespace Marlin.View.Chrome {
                 add (ele2);
                 add (ele3);
                 add (ele4);
+
+                var edit_click_area = new Gtk.Button ();
+                edit_click_area.set_size_request (50, -1);
+                edit_click_area.hexpand = true;
+                edit_click_area.clicked.connect (() => {
+                    edit_request ();
+                });
+
+                var refresh_button = new Gtk.Button.from_icon_name (Marlin.ICON_PATHBAR_SECONDARY_REFRESH_SYMBOLIC);
+                refresh_button.clicked.connect (() => {
+                    refresh_request ();
+                });
+
+                add (edit_click_area);
+                add (refresh_button);
+
             }
 
             public override bool draw (Cairo.Context cr) {
