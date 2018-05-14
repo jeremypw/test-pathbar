@@ -25,7 +25,7 @@ namespace Marlin.View.Chrome
 {
     public class TopMenu : Gtk.HeaderBar {
         public ViewSwitcher? view_switcher;
-        public LocationBar? location_bar;
+        public BasicLocationBar? location_bar;
         public Chrome.ButtonWithMenu button_forward;
         public Chrome.ButtonWithMenu button_back;
 
@@ -85,7 +85,7 @@ namespace Marlin.View.Chrome
             view_switcher.show_all ();
             pack_start (view_switcher);
 
-            location_bar = new LocationBar ();
+            location_bar = new BasicLocationBar ();
             connect_location_bar_signals ();
             location_bar.show_all ();
             pack_start (location_bar);
@@ -94,12 +94,12 @@ namespace Marlin.View.Chrome
         }
 
         private void connect_location_bar_signals () {
-            location_bar.reload_request.connect (() => {
-                reload_request ();
-            });
-            location_bar.focus_file_request.connect ((file) => {
-                focus_location_request (file);
-            });
+//            location_bar.reload_request.connect (() => {
+//                reload_request ();
+//            });
+//            location_bar.focus_file_request.connect ((file) => {
+//                focus_location_request (file);
+//            });
             location_bar.focus_in_event.connect ((event) => {
                 locked_focus = true;
                 return focus_in_event (event);
@@ -111,15 +111,15 @@ namespace Marlin.View.Chrome
             location_bar.path_change_request.connect ((path, flag) => {
                 path_change_request (path, flag);
             });
-            location_bar.escape.connect (() => {escape ();});
+//            location_bar.escape.connect (() => {escape ();});
         }
 
-        public bool enter_search_mode () {
-            return location_bar.enter_search_mode ();
+        public void enter_search_mode () {
+//            return location_bar.enter_search_mode ();
         }
 
-        public bool enter_navigate_mode () {
-            return location_bar.enter_navigate_mode ();
+        public void enter_navigate_mode () {
+//            return location_bar.enter_navigate_mode ();
         }
 
         public void set_back_menu (Gee.List<string> path_list) {
@@ -167,7 +167,7 @@ namespace Marlin.View.Chrome
         }
 
         public void cancel () {
-            location_bar.cancel ();
+//            location_bar.cancel ();
         }
     }
 }

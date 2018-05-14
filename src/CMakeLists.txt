@@ -61,10 +61,10 @@ IF (WITH_UNITY AND UNITY_FOUND)
         View/Slot.vala
         View/Miller.vala
         View/Widgets/AbstractEditableLabel.vala
-        View/Widgets/BreadcrumbsEntry.vala
+        #View/Widgets/BreadcrumbsEntry.vala
         View/Widgets/DiskRenderer.vala
         View/Widgets/Label.vala
-        View/Widgets/LocationBar.vala
+        #View/Widgets/LocationBar.vala
         View/Widgets/MultiLineEditableLabel.vala
         View/Widgets/OverlayBar.vala
         View/Widgets/PermissionButton.vala
